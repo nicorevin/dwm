@@ -1,0 +1,55 @@
+diff --git a/dwm.c b/dwm.c
+index ffc8864..85c6419 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -58,7 +58,7 @@
+ 
+ /* enums */
+ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+-enum { SchemeNorm, SchemeSel, SchemeLast }; /* color schemes */
++enum { SchemeNorm, SchemeSel, SchemeDim, SchemeLast }; /* color schemes */
+ enum { NetSupported, NetWMName, NetWMState,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+@@ -704,10 +704,10 @@ drawbar(Monitor *m) {
+ 	x = 0;
+ 	for(i = 0; i < LENGTH(tags); i++) {
+ 		w = TEXTW(tags[i]);
+-		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
++		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : (occ & 1 << i ? &scheme[SchemeNorm] : &scheme[SchemeDim]));
+ 		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
+-		drw_rect(drw, x, 0, w, bh, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+-		           occ & 1 << i, urg & 1 << i);
++		// drw_rect(drw, x, 0, w, bh, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
++		           // occ & 1 << i, urg & 1 << i);
+ 		x += w;
+ 	}
+ 	w = blw = TEXTW(m->ltsymbol);
+@@ -729,7 +729,7 @@ drawbar(Monitor *m) {
+ 	if((w = x - xx) > bh) {
+ 		x = xx;
+ 		if(m->sel) {
+-			drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
++		//	drw_setscheme(drw, m == selmon ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
+ 			drw_text(drw, x, 0, w, bh, m->sel->name, 0);
+ 			drw_rect(drw, x, 0, w, bh, m->sel->isfixed, m->sel->isfloating, 0);
+ 		}
+@@ -1096,7 +1096,7 @@ monocle(Monitor *m) {
+ 		if(ISVISIBLE(c))
+ 			n++;
+ 	if(n > 0) /* override layout symbol */
+-		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
++		snprintf(m->ltsymbol, sizeof m->ltsymbol, "%d", n);
+ 	for(c = nexttiled(m->clients); c; c = nexttiled(c->next))
+ 		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, False);
+ }
+@@ -1528,6 +1528,9 @@ setup(void) {
+ 	scheme[SchemeSel].border = drw_clr_create(drw, selbordercolor);
+ 	scheme[SchemeSel].bg = drw_clr_create(drw, selbgcolor);
+ 	scheme[SchemeSel].fg = drw_clr_create(drw, selfgcolor);
++	scheme[SchemeDim].border = drw_clr_create(drw, dimbordercolor);
++	scheme[SchemeDim].bg = drw_clr_create(drw, dimbgcolor);
++	scheme[SchemeDim].fg = drw_clr_create(drw, dimfgcolor);
+ 	/* init bars */
+ 	updatebars();
+ 	updatestatus();
