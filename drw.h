@@ -1,41 +1,47 @@
 /* See LICENSE file for copyright and license details. */
 
-typedef struct {
-	unsigned long rgb;
+typedef struct
+{
+    unsigned long rgb;
 } Clr;
 
-typedef struct {
-	Cursor cursor;
+typedef struct
+{
+    Cursor cursor;
 } Cur;
 
-typedef struct {
-	int ascent;
-	int descent;
-	unsigned int h;
-	XFontSet set;
-	XFontStruct *xfont;
+typedef struct
+{
+    int ascent;
+    int descent;
+    unsigned int h;
+    XFontSet set;
+    XFontStruct *xfont;
 } Fnt;
 
-typedef struct {
-	Clr *fg;
-	Clr *bg;
-	Clr *border;
+typedef struct
+{
+    Clr *fg;
+    Clr *bg;
+    Clr *border;
 } ClrScheme;
 
-typedef struct {
-	unsigned int w, h;
-	Display *dpy;
-	int screen;
-	Window root;
-	Drawable drawable;
-	GC gc;
-	ClrScheme *scheme;
-	Fnt *font;
+typedef struct
+{
+    unsigned int w, h;
+    Display *dpy;
+    int screen;
+    Window root;
+    Drawable drawable;
+    GC gc;
+    ClrScheme *scheme;
+    Fnt *font;
 } Drw;
 
-typedef struct {
-	unsigned int w;
-	unsigned int h;
+typedef struct
+{
+    unsigned int w;
+    unsigned int h;
 } Extnts;
 
 /* Drawable abstraction */
