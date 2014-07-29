@@ -54,7 +54,7 @@ static const Layout layouts[] =
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *termcmd[]    = { "st", NULL };
+static const char *termcmd[]    = { "st", "-e", "tmux", "a," NULL };
 static const char *audio_up[]   = { "amixer", "--quiet", "sset", "Master", "1+", NULL };
 static const char *audio_down[] = { "amixer", "--quiet", "sset", "Master", "1-", NULL };
 static const char *audio_mute[] = { "amixer", "--quiet", "sset", "Master", "toggle", NULL };
