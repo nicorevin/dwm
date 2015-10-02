@@ -17,24 +17,27 @@ static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
 /* tagging */
-static const char *tags[] = { "xvt", "web", "dev", "etc", "box" };
-static const Rule rules[] =
-{
+static const char *tags[] = { "xvt", "web", "etc", "box" };
+
+static const Rule rules[] = {
+	/* xprop(1):
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+	 */
     // xprop | grep WM_CLASS | awk '{print $4}'
     /* class          instance  title  tags mask  isfloating  monitor */
-    { "Gimp",         NULL,     NULL,  1 << 3,    True,       -1 },
+    { "Gimp",         NULL,     NULL,  1 << 2,    True,       -1 },
     { "Chromium",     NULL,     NULL,  1 << 1,    False,      -1 },
     { "st-256color",  NULL,     NULL,  1,         False,      -1 },
-    { "Subl3",        NULL,     NULL,  1 << 2,    False,      -1 },
-    { "VirtualBox",   NULL,     NULL,  1 << 4,    False,      -1 },
+    { "VirtualBox",   NULL,     NULL,  1 << 3,    False,      -1 },
 };
 
 /* layout(s) */
 static const float mfact      = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
 static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
-static const Layout layouts[] =
-{
+
+static const Layout layouts[] = {
     /* symbol     arrange function */
     { "T",  tile },    /* first entry is default */
     { "f",  NULL },    /* no layout function means floating behavior */
@@ -54,7 +57,7 @@ static const Layout layouts[] =
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *termcmd[]    = { "st", "-e", "tmux", "a", NULL };
+static const char *termcmd[]    = { "st", "-e", "tmux", "a", "-d", NULL };
 static const char *audio_up[]   = { "amixer", "--quiet", "sset", "Master", "1+", NULL };
 static const char *audio_down[] = { "amixer", "--quiet", "sset", "Master", "1-", NULL };
 static const char *audio_mute[] = { "amixer", "--quiet", "sset", "Master", "toggle", NULL };
@@ -64,8 +67,7 @@ static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", font,
                                     "-sb", selbgcolor, "-sf", selfgcolor, NULL
                                   };
 
-static Key keys[] =
-{
+static Key keys[] = {
     /* modifier            key          function         argument */
     { MODKEY,              XK_p,        spawn,           {.v = dmenucmd } },
     { MODKEY | ShiftMask,  XK_l,        spawn,           {.v = lockscreen } },
@@ -99,13 +101,11 @@ static Key keys[] =
     TAGKEYS(               XK_2,                         1)
     TAGKEYS(               XK_3,                         2)
     TAGKEYS(               XK_4,                         3)
-    TAGKEYS(               XK_5,                         4)
 };
 
 /* button definitions */
 /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] =
-{
+static Button buttons[] = {
     /* click          event mask  button    function         argument */
     { ClkLtSymbol,    0,          Button1,  setlayout,       {0} },
     { ClkLtSymbol,    0,          Button3,  setlayout,       {.v = &layouts[2]} },
