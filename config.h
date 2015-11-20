@@ -27,7 +27,7 @@ static const Rule rules[] = {
     // xprop | grep WM_CLASS | awk '{print $4}'
     /* class          instance  title  tags mask  isfloating  monitor */
     { "Gimp",         NULL,     NULL,  1 << 2,    True,       -1 },
-    { "Chromium",     NULL,     NULL,  1 << 1,    False,      -1 },
+    { "chromium",     NULL,     NULL,  1 << 1,    False,      -1 },
     { "st-256color",  NULL,     NULL,  1,         False,      -1 },
     { "VirtualBox",   NULL,     NULL,  1 << 3,    False,      -1 },
 };
