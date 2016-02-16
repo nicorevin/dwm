@@ -58,11 +58,11 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *termcmd[]    = { "st", "-e", "tmux", "a", "-d", NULL };
-static const char *audio_up[]   = { "amixer", "--quiet", "sset", "Master", "1+", NULL };
-static const char *audio_down[] = { "amixer", "--quiet", "sset", "Master", "1-", NULL };
+static const char *audio_up[]   = { "amixer", "--quiet", "sset", "Master", "1%+", NULL };
+static const char *audio_down[] = { "amixer", "--quiet", "sset", "Master", "1%-", NULL };
 static const char *audio_mute[] = { "amixer", "--quiet", "sset", "Master", "toggle", NULL };
 static const char *lockscreen[] = { "slock", NULL };
-static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", font,
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", "terminus-9",
                                     "-nb", normbgcolor, "-nf", normfgcolor,
                                     "-sb", selbgcolor, "-sf", selfgcolor, NULL
                                   };
